@@ -1,0 +1,127 @@
+import pandas as pd
+
+
+# ============================================================
+# STUDENT SLEEP & MENTAL HEALTH ANALYSIS
+# ============================================================
+
+# Load dataset
+df = pd.read_csv("data/students.csv")
+
+
+# ============================================================
+# 1. INITIAL DATA ANALYSIS
+# ============================================================
+
+print("\n--- First 5 rows ---")
+print(df.head())
+
+print("\n--- Dataset information ---")
+df.info()
+
+print("\n--- Descriptive statistics ---")
+print(df.describe(include="all"))
+
+
+# ============================================================
+# 2. REMOVE UNNECESSARY COLUMN
+# ============================================================
+
+df = df.drop(columns=["LikePresentations"])
+
+print("\n--- LikePresentations column removed ---")
+
+
+# ============================================================
+# 3. RENAME COLUMNS
+# ============================================================
+
+# Example:
+# AcademicPerformance -> Academic Performance
+# SleepDuration -> Sleep Duration
+
+df.columns = df.columns.str.replace(
+    r"(?<=[a-z])(?=[A-Z])",
+    " ",
+    regex=True
+)
+
+print("\n--- New column names ---")
+print(df.columns.tolist())
+
+
+# ============================================================
+# 4. DATA CLEANING
+# ============================================================
+
+print("\nDuplicates before cleaning:")
+print(df.duplicated().sum())
+
+# Remove duplicates
+df = df.drop_duplicates()
+
+# Remove rows with missing values
+df = df.dropna()
+
+print("\nMissing values after cleaning:")
+print(df.isnull().sum())
+
+print("\nNumber of rows after cleaning:")
+print(len(df))
+
+
+# ============================================================
+# 5. AVERAGE SLEEP DURATION
+# ============================================================
+
+average_sleep = df["Sleep Duration"].mean()
+
+print("\n--- Average Sleep Duration ---")
+print(round(average_sleep, 2))
+
+
+# ============================================================
+# 6. EXCELLENT STUDENTS
+# ============================================================
+
+excellent_students = df[
+    df["Academic Performance"].str.lower() == "excellent"
+]
+
+print("\n--- Excellent Students ---")
+print(excellent_students)
+
+excellent_sleep = excellent_students["Sleep Duration"].mean()
+
+print("\nAverage sleep of excellent students:")
+print(round(excellent_sleep, 2))
+
+
+# ============================================================
+# 7. STUDENTS WITH DEPRESSION
+# ============================================================
+
+depressed_students = df[
+    df["Depression"].str.lower() == "yes"
+]
+
+print("\n--- Students with Depression ---")
+print(depressed_students)
+
+depression_sleep = depressed_students["Sleep Duration"].mean()
+
+print("\nAverage sleep of students with depression:")
+print(round(depression_sleep, 2))
+
+
+# ============================================================
+# 8. FINAL SUMMARY
+# ============================================================
+
+print("\n==============================")
+print("       ANALYSIS SUMMARY")
+print("==============================")
+
+print("Average sleep:", round(average_sleep, 2))
+print("Excellent students average sleep:", round(excellent_sleep, 2))
+print("Students with depression average sleep:", round(depression_sleep, 2))

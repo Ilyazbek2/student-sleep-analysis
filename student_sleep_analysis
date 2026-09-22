@@ -114,13 +114,6 @@ print("\nAverage sleep of students with depression:")
 print(round(depression_sleep, 2))
 
 
-# ============================================================
-# 8. FINAL SUMMARY
-# ============================================================
-
-print("\n==============================")
-print("       ANALYSIS SUMMARY")
-print("==============================")
 
 print("Average sleep:", round(average_sleep, 2))
 print("Excellent students average sleep:", round(excellent_sleep, 2))

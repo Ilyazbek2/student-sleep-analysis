@@ -1,11 +1,10 @@
 import pandas as pd
 
-
 # ============================================================
 # STUDENT SLEEP & MENTAL HEALTH ANALYSIS
 # ============================================================
 
-# Load dataset
+
 df = pd.read_csv("data/students.csv")
 
 
